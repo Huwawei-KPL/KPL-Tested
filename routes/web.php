@@ -149,7 +149,7 @@ Route::group(['middleware' => 'user'], function () {
 	Route::get('showPegawai/{id_perusahaan}', ['as' => 'pages.pegawai', 'uses' => 'App\Http\Controllers\PageController@showPegawai']);
 	Route::post('tambahdepartemen/{id_perusahaan}', [App\Http\Controllers\DataController::class, 'addDepartemen']);
 	Route::get('deleteDepartemen/{id_departemen}/{id_perusahaan}', [App\Http\Controllers\DataController::class, 'deleteDepartemen']);
-	Route::get('ubahDepartemen/{id_departemen}/{id_perusahaan}', ['as' => 'pages.pegawai', 'uses' => 'App\Http\Controllers\PageController@ubahDepartemen']);
+	Route::get('ubahDepartemen/{id_departemen}', ['as' => 'pages.pegawai', 'uses' => 'App\Http\Controllers\PageController@ubahDepartemen']);
 	Route::post('editdepartemen/{id_departemen}/{id_perusahaan}', [App\Http\Controllers\DataController::class, 'editDepartemen']);
 });
 

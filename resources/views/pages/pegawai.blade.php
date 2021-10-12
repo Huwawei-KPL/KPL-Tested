@@ -107,7 +107,7 @@
 
                                     <td><a class="btn  btn-danger btn-round" onclick="return confirm('Apakah anda yakin ingin menghapus data departemen ini?')" href="/deleteDepartemen/{{$departemen->id_departemen}}/{{{Auth::user()->id_perusahaan}}}" margin-right:20;">Hapus</a>
                                         <div class="divider"></div>
-                                        <a class="btn  btn-danger btn-round" href="/ubahDepartemen/{{$departemen->id_departemen}}/{{{Auth::user()->id_perusahaan}}}">Ubah</a>
+                                        <a class="btn  btn-danger btn-round" href="/ubahDepartemen/{{$departemen->id_departemen}}">Ubah</a>
                                     </td>
                                 </tr>
                                 @php $i++; @endphp

@@ -286,7 +286,7 @@ class PageController extends Controller
         return view('pages.ubahpegawai', ['users' => $users, 'departemen' => $departemen]);
     }
 
-    public function ubahPasswordUser($id, $id_perusahaan)
+    public function ubahPasswordUser($id)
     {
         $users = DB::table('users')
             ->where('users.id', '=', $id)
@@ -294,7 +294,7 @@ class PageController extends Controller
         return view('pages.ubahpassworduser', ['users' => $users]);
     }
 
-    public function ubahDepartemen($id_departemen, $id_perusahaan)
+    public function ubahDepartemen($id_departemen)
     {
         $departemen = DB::table('departemen')
             ->where('departemen.id_departemen', '=', $id_departemen)
