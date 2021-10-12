@@ -244,7 +244,7 @@ class UserController extends Controller
     function bookRuang(Request $request, $id_ruangan, $approve)
     {
         // $id_perusahaan = Auth::user()->id_perusahaan;
-        $validated = $request->validate([
+        $request->validate([
             'keperluan' => 'required',
 
         ]);
