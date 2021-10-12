@@ -24,10 +24,10 @@ class MasterController extends Controller
 
         return view('master.perusahaan', ['perusahaan' => $perusahaan]);
     }
-    public function ubahPerusahaan($id)
+    public function ubahPerusahaan($idperusahaan)
     {
         $perusahaan = DB::table('perusahaan')
-            ->where('id_perusahaan', '=', $id)
+            ->where('id_perusahaan', '=', $idperusahaan)
             ->get();
 
         return view('master.changeperusahaan', ['perusahaan' => $perusahaan]);
