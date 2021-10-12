@@ -29,7 +29,6 @@ class UserController extends Controller
         return view('users.index', ['users' => $model->paginate(15)]);
     }
 
-
     public function hapusKonsumsi($id_peminjaman, $id_ruang, $tanggal, $waktu)
     {
         $jadwal = DB::table('jadwalkonsumsi')
@@ -41,9 +40,6 @@ class UserController extends Controller
             ->where('id_ruang', $id_ruang)
             ->where('waktu', $waktu);
         $kons->delete();
-
-
-
 
         return redirect('/mybooking');
     }
@@ -138,7 +134,6 @@ class UserController extends Controller
     }
     public function homeUser()
     {
-
         $gedung = DB::table('gedung')
             ->where('gedung.id_perusahaan', Auth::user()->id_perusahaan)
             ->count();
@@ -153,7 +148,6 @@ class UserController extends Controller
         $peminjaman = DB::table('peminjaman')
             ->join('users', 'peminjaman.id_users', 'users.id')
             ->where('users.id_perusahaan', Auth::user()->id_perusahaan)
-
             ->count();
         return view('pegawai.home', ['gedung' => $gedung, 'ruang' => $ruang, 'pegawai' => $pegawai, 'peminjaman' => $peminjaman]);
     }
@@ -174,7 +168,6 @@ class UserController extends Controller
         $e = 0;
         $pesanan = '';
         foreach ($ceklama as $ck) {
-
             if ($request->input($ck->id_konsumsi) != 0) {
 
                 //Ngubah yang udah ada, ke jumlah lain
@@ -230,8 +223,6 @@ class UserController extends Controller
             }
         }
 
-
-        //Update Harga dan Pesanan
         DB::table('jadwalkonsumsi')
             ->where('id_peminjaman', $id_peminjaman)
             ->update([
@@ -249,10 +240,7 @@ class UserController extends Controller
 
         ]);
 
-
         if ($request->input('pesankonsumsi') == 'tidak') {
-
-
             $peminjaman = new peminjaman;
             $peminjaman->id_ruangan = $id_ruangan;
             $peminjaman->id_users = Auth::user()->id;
@@ -274,8 +262,6 @@ class UserController extends Controller
             } else {
                 $peminjaman->approval = 0;
             }
-
-
             $peminjaman->save();
         } else {
             $peminjaman = new peminjaman;
@@ -428,7 +414,6 @@ class UserController extends Controller
             $whiteboard = '0';
         }
 
-
         $filter1 = DB::table('peminjaman')
             ->join('ruangan', 'ruangan.id_ruang', 'peminjaman.id_ruangan')
             ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
@@ -475,8 +460,6 @@ class UserController extends Controller
             ->where('waktupinjam', '<=', $wktakhir)
             ->where('waktuselesai', '>=', $wktakhir)
             ->distinct('ruangan.id_ruang')
-
-
             ->get();
         $filter4 = DB::table('peminjaman')
             ->join('ruangan', 'ruangan.id_ruang', 'peminjaman.id_ruangan')
@@ -496,8 +479,6 @@ class UserController extends Controller
             ->distinct('ruangan.id_ruang')
 
             ->get();
-
-
 
         if ($fasilitas != null) {
 
@@ -528,20 +509,10 @@ class UserController extends Controller
                 ->where('gedung.id_perusahaan', Auth::user()->id_perusahaan)
                 ->get();
         }
-
-
         $id_perusahaan = Auth::user()->id_perusahaan;
         $gdg = DB::table('gedung')
             ->where('id_perusahaan', '=', $id_perusahaan)
             ->get();
-
-
-
-
-
-
-
-
 
         return view('pegawai.bookruanganresult', ['filter3' => $filter3, 'filter1' => $filter1, 'filter2' => $filter2, 'filter4' => $filter4, 'wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $ac, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'ruang' => $ruang, 'kapasitas' => $kapasitas, 'gedung' => $gedung, 'gdg' => $gdg]);
     }
@@ -725,7 +696,6 @@ class UserController extends Controller
     }
     public function home()
     {
-
         $today = Carbon::today();
         $today->format('d-m-Y');
         date('d-m-Y', strtotime($today));
@@ -788,8 +758,6 @@ class UserController extends Controller
             ->where('id_ruangan', $idjadwal)
             ->where('tanggal', $tanggaljadwal)
             ->get();
-
-
         $jumlah = '6';
         $id_gedung = 'semua';
         $id_perusahaan = Auth::user()->id_perusahaan;
@@ -945,8 +913,6 @@ class UserController extends Controller
         return view('pegawai.book', ['wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $ac, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'book' => $book]);
     }
 
-
-
     public function formBooking($id_ruang, $wktawal, $wktakhir, $tanggal)
     {
         $konsumsi = DB::table('konsumsi')
@@ -994,9 +960,6 @@ class UserController extends Controller
             ->get();
 
         if ($fasilitas != null) {
-
-
-
             $book = DB::table('ruangan')
                 ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
                 ->whereNotIn('id_ruang', $gg->pluck('id_ruangan'))
@@ -1020,16 +983,10 @@ class UserController extends Controller
 
                 ->get();
         }
-
-
         $id_perusahaan = Auth::user()->id_perusahaan;
         $gdg = DB::table('gedung')
             ->where('id_perusahaan', '=', $id_perusahaan)
             ->get();
-
-
-
-
         $peminjaman = DB::table('peminjaman')
             ->join('ruangan', 'ruangan.id_ruang', 'peminjaman.id_ruangan')
             ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
@@ -1047,8 +1004,6 @@ class UserController extends Controller
                         ['waktupinjam', '>=', $wktawal],
                         ['waktupinjam', '>=', $wktakhir],
                     ])
-
-
             )
             ->orWhereIn(
                 'ruangan.id_ruang',
@@ -1058,15 +1013,10 @@ class UserController extends Controller
                         ['waktuselesai', '<=', $wktawal],
                         ['waktuselesia', '<=', $wktakhir],
                     ])
-
-
             )
             ->distinct('ruangan.id_ruang')
             ->get();
 
-
-
-        // return redirect('/lihatruangan');
         return view('pegawai.book', ['wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $ac, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'book' => $book, 'peminjaman' => $peminjaman, 'kapasitas' => $kapasitas, 'gedung' => $gedung, 'gdg' => $gdg]);
     }
 }
