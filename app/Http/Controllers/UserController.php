@@ -425,10 +425,8 @@ class UserController extends Controller
             ->where('peminjaman.tanggal', '=', $tanggal)
             ->where('gedung.id_perusahaan', Auth::user()->id_perusahaan)
             ->where('waktupinjam', '<=', $wktawal)
-
             ->where('waktuselesai', '>=', $wktakhir)
             ->distinct('ruangan.id_ruang')
-
             ->get();
 
         $filter2 = DB::table('peminjaman')
@@ -475,9 +473,7 @@ class UserController extends Controller
             ->where('waktupinjam', '<=', $wktakhir)
             ->where('waktuselesai', '>=', $wktawal)
             ->where('waktuselesai', '<=', $wktakhir)
-
             ->distinct('ruangan.id_ruang')
-
             ->get();
 
         if ($fasilitas != null) {
@@ -955,14 +951,14 @@ class UserController extends Controller
         if ($whiteboard != 1) {
             $whiteboard = '0';
         }
-        $gg = DB::table('peminjaman')
+        $ggg = DB::table('peminjaman')
             ->where('tanggal', '=', $tanggal)
             ->get();
 
         if ($fasilitas != null) {
             $book = DB::table('ruangan')
                 ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
-                ->whereNotIn('id_ruang', $gg->pluck('id_ruangan'))
+                ->whereNotIn('id_ruang', $ggg->pluck('id_ruangan'))
                 ->where('ruangan.id_gedung', $gedung)
                 ->where('ruangan.ac', $ac)
                 ->where('ruangan.infocus', $infocus)
@@ -974,7 +970,7 @@ class UserController extends Controller
 
             $book = DB::table('ruangan')
                 ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
-                ->whereNotIn('id_ruang', $gg->pluck('id_ruangan'))
+                ->whereNotIn('id_ruang', $ggg->pluck('id_ruangan'))
                 ->where('ruangan.id_gedung', $gedung)
                 ->where('ruangan.ac', $ac)
                 ->where('ruangan.infocus', $infocus)
