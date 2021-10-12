@@ -134,9 +134,9 @@ class CetakController extends Controller
         return view('master.cetaklaporankonsumsi', compact('pinjam'));
         //dd("Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir);
     }
-    public function cetakKonsumsi($tglawal, $tglakhir, $id)
+    public function cetakKonsumsi($tglawal, $tglakhir, $iduser)
     {
-        if ($id != "semua") {
+        if ($iduser != "semua") {
             $pinjam = DB::table('jadwalkonsumsi')
                 ->join('peminjaman', 'jadwalkonsumsi.id_peminjaman', '=', 'peminjaman.id_peminjaman')
                 ->join('ruangan', 'peminjaman.id_ruangan', '=', 'ruangan.id_ruang')
@@ -145,7 +145,7 @@ class CetakController extends Controller
                 ->join('departemen', 'users.id_departemen', '=', 'departemen.id_departemen')
                 ->join('perusahaan', 'departemen.id_perusahaan', '=', 'perusahaan.id_perusahaan')
                 ->whereBetween('peminjaman.tanggal', [$tglawal, $tglakhir])
-                ->where('gedung.id_gedung', '=', $id)
+                ->where('gedung.id_gedung', '=', $iduser)
                 ->orderBy('tanggal')
                 ->orderBy('waktupinjam')
                 ->get();
