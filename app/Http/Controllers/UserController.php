@@ -165,7 +165,7 @@ class UserController extends Controller
             ->whereNotIn('id_konsumsi', $ceklama->pluck('id_konsumsi'))
             ->get();
         $sum = 0;
-        $e = 0;
+        $empty = 0;
         $pesanan = '';
         foreach ($ceklama as $ck) {
             if ($request->input($ck->id_konsumsi) != 0) {
@@ -183,13 +183,13 @@ class UserController extends Controller
                 //Ngitung harga
                 $sum = $sum + ($ck->harga * $request->input($ck->id_konsumsi));
                 //Nulis Pesenan
-                if ($e == 0) {
+                if ($empty == 0) {
                     $pesanan = $request->input($ck->id_konsumsi) . " " . $ck->konsumsi;
                 } else {
 
                     $pesanan = $pesanan . ", " . $request->input($ck->id_konsumsi) . " " . $ck->konsumsi;
                 }
-                $e++;
+                $empty++;
             } else {
                 //Ngapus kalo di 0 in
                 $fp = DB::table('pesankonsumsi')
@@ -213,13 +213,13 @@ class UserController extends Controller
                 $jadwal->save();
 
                 $sum = $sum + ($ck->harga * $request->input($ck->id_konsumsi));
-                if ($e == 0) {
+                if ($empty == 0) {
                     $pesanan = $request->input($ck->id_konsumsi) . " " . $ck->konsumsi;
                 } else {
 
                     $pesanan = $pesanan . ", " . $request->input($ck->id_konsumsi) . " " . $ck->konsumsi;
                 }
-                $e++;
+                $empty++;
             }
         }
 
@@ -319,17 +319,17 @@ class UserController extends Controller
             $jadwal->waktu =  $request->input('wkt_awal');
             $sum = 0;
 
-            $e = 0;
+            $empty = 0;
             foreach ($cekharga as $cekharga) {
                 $hrg = $cekharga->jumlahpesanan * $cekharga->harga;
                 $sum = $sum + $hrg;
-                if ($e == 0) {
+                if ($empty == 0) {
                     $test = $test . $cekharga->jumlahpesanan . " " . $cekharga->konsumsi;
                 } else {
 
                     $test = $test . ", " . $cekharga->jumlahpesanan . " " . $cekharga->konsumsi;
                 }
-                $e++;
+                $empty++;
             }
 
             strval($test);
@@ -399,13 +399,13 @@ class UserController extends Controller
         $tanggal = $request->input('tanggal');
         $gedung = $request->input('gedung');
         $kapasitas = $request->input('kapasitas');
-        $ac = $request->input('ac');
+        $airc = $request->input('ac');
         $infocus = $request->input('infocus');
         $whiteboard = $request->input('whiteboard');
         $fasilitas = $request->input('fasilitas');
 
-        if ($ac != 1) {
-            $ac = '0';
+        if ($airc != 1) {
+            $airc = '0';
         }
         if ($infocus != 1) {
             $infocus = '0';
@@ -417,7 +417,7 @@ class UserController extends Controller
         $filter1 = DB::table('peminjaman')
             ->join('ruangan', 'ruangan.id_ruang', 'peminjaman.id_ruangan')
             ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
-            ->where('ruangan.ac', $ac)
+            ->where('ruangan.ac', $airc)
             ->where('ruangan.infocus', $infocus)
             ->where('ruangan.whiteboard', $whiteboard)
             ->where('ruangan.id_gedung', $gedung)
@@ -432,7 +432,7 @@ class UserController extends Controller
         $filter2 = DB::table('peminjaman')
             ->join('ruangan', 'ruangan.id_ruang', 'peminjaman.id_ruangan')
             ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
-            ->where('ruangan.ac', $ac)
+            ->where('ruangan.ac', $airc)
             ->where('ruangan.infocus', $infocus)
             ->where('ruangan.whiteboard', $whiteboard)
             ->where('ruangan.id_gedung', $gedung)
@@ -447,7 +447,7 @@ class UserController extends Controller
         $filter3 = DB::table('peminjaman')
             ->join('ruangan', 'ruangan.id_ruang', 'peminjaman.id_ruangan')
             ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
-            ->where('ruangan.ac', $ac)
+            ->where('ruangan.ac', $airc)
             ->where('ruangan.infocus', $infocus)
             ->where('ruangan.whiteboard', $whiteboard)
             ->where('ruangan.id_gedung', $gedung)
@@ -462,7 +462,7 @@ class UserController extends Controller
         $filter4 = DB::table('peminjaman')
             ->join('ruangan', 'ruangan.id_ruang', 'peminjaman.id_ruangan')
             ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
-            ->where('ruangan.ac', $ac)
+            ->where('ruangan.ac', $airc)
             ->where('ruangan.infocus', $infocus)
             ->where('ruangan.whiteboard', $whiteboard)
             ->where('ruangan.id_gedung', $gedung)
@@ -483,7 +483,7 @@ class UserController extends Controller
                 ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
 
                 ->where('ruangan.id_gedung', $gedung)
-                ->where('ruangan.ac', $ac)
+                ->where('ruangan.ac', $airc)
                 ->where('ruangan.infocus', $infocus)
                 ->where('ruangan.whiteboard', $whiteboard)
                 ->where('ruangan.kapasitas', '>=', $kapasitas)
@@ -498,7 +498,7 @@ class UserController extends Controller
 
 
                 ->where('ruangan.id_gedung', $gedung)
-                ->where('ruangan.ac', $ac)
+                ->where('ruangan.ac', $airc)
                 ->where('ruangan.infocus', $infocus)
                 ->where('ruangan.whiteboard', $whiteboard)
                 ->where('ruangan.kapasitas', '>=', $kapasitas)
@@ -510,7 +510,7 @@ class UserController extends Controller
             ->where('id_perusahaan', '=', $id_perusahaan)
             ->get();
 
-        return view('pegawai.bookruanganresult', ['filter3' => $filter3, 'filter1' => $filter1, 'filter2' => $filter2, 'filter4' => $filter4, 'wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $ac, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'ruang' => $ruang, 'kapasitas' => $kapasitas, 'gedung' => $gedung, 'gdg' => $gdg]);
+        return view('pegawai.bookruanganresult', ['filter3' => $filter3, 'filter1' => $filter1, 'filter2' => $filter2, 'filter4' => $filter4, 'wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $airc, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'ruang' => $ruang, 'kapasitas' => $kapasitas, 'gedung' => $gedung, 'gdg' => $gdg]);
     }
 
     public function bookForm()
@@ -898,7 +898,7 @@ class UserController extends Controller
 
         return redirect()->to('/mybooking');
     }
-    public function lihatRuangan($wktawal, $wktakhir, $tanggal, $gedung, $kapasitas, $ac, $infocus, $whiteboard, $fasilitas)
+    public function lihatRuangan($wktawal, $wktakhir, $tanggal, $gedung, $kapasitas, $airc, $infocus, $whiteboard, $fasilitas)
     {
         $book = DB::table('ruangan')
             ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
@@ -906,7 +906,7 @@ class UserController extends Controller
             ->where('ruang.id_gedung', $gedung)
             ->where('ruang.kapasitas', '>=', $kapasitas)
             ->get();
-        return view('pegawai.book', ['wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $ac, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'book' => $book]);
+        return view('pegawai.book', ['wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $airc, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'book' => $book]);
     }
 
     public function formBooking($id_ruang, $wktawal, $wktakhir, $tanggal)
@@ -934,7 +934,7 @@ class UserController extends Controller
         $tanggal = $request->input('tanggal');
         $gedung = $request->input('gedung');
         $kapasitas = $request->input('kapasitas');
-        $ac = $request->input('ac');
+        $airc = $request->input('ac');
         $infocus = $request->input('infocus');
         $whiteboard = $request->input('whiteboard');
         $fasilitas = $request->input('fasilitas');
@@ -942,8 +942,8 @@ class UserController extends Controller
             'tanggal' => 'required|date|after:yesterday',
 
         ]);
-        if ($ac != 1) {
-            $ac = '0';
+        if ($airc != 1) {
+            $airc = '0';
         }
         if ($infocus != 1) {
             $infocus = '0';
@@ -960,7 +960,7 @@ class UserController extends Controller
                 ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
                 ->whereNotIn('id_ruang', $ggg->pluck('id_ruangan'))
                 ->where('ruangan.id_gedung', $gedung)
-                ->where('ruangan.ac', $ac)
+                ->where('ruangan.ac', $airc)
                 ->where('ruangan.infocus', $infocus)
                 ->where('ruangan.whiteboard', $whiteboard)
                 ->where('ruangan.kapasitas', '>=', $kapasitas)
@@ -972,7 +972,7 @@ class UserController extends Controller
                 ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
                 ->whereNotIn('id_ruang', $ggg->pluck('id_ruangan'))
                 ->where('ruangan.id_gedung', $gedung)
-                ->where('ruangan.ac', $ac)
+                ->where('ruangan.ac', $airc)
                 ->where('ruangan.infocus', $infocus)
                 ->where('ruangan.whiteboard', $whiteboard)
                 ->where('ruangan.kapasitas', '>=', $kapasitas)
@@ -986,7 +986,7 @@ class UserController extends Controller
         $peminjaman = DB::table('peminjaman')
             ->join('ruangan', 'ruangan.id_ruang', 'peminjaman.id_ruangan')
             ->join('gedung', 'ruangan.id_gedung', 'gedung.id_gedung')
-            ->where('ruangan.ac', $ac)
+            ->where('ruangan.ac', $airc)
             ->where('ruangan.infocus', $infocus)
             ->where('ruangan.whiteboard', $whiteboard)
             ->where('ruangan.id_gedung', $gedung)
@@ -1013,6 +1013,6 @@ class UserController extends Controller
             ->distinct('ruangan.id_ruang')
             ->get();
 
-        return view('pegawai.book', ['wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $ac, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'book' => $book, 'peminjaman' => $peminjaman, 'kapasitas' => $kapasitas, 'gedung' => $gedung, 'gdg' => $gdg]);
+        return view('pegawai.book', ['wktawal' => $wktawal, 'wktakhir' => $wktakhir, 'tanggal' => $tanggal, 'ac' => $airc, 'infocus' => $infocus, 'whiteboard' => $whiteboard, 'fasilitas' => $fasilitas, 'book' => $book, 'peminjaman' => $peminjaman, 'kapasitas' => $kapasitas, 'gedung' => $gedung, 'gdg' => $gdg]);
     }
 }
