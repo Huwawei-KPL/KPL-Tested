@@ -2,7 +2,7 @@
  * Serbian latin translation for bootstrap-datetimepicker
  * Bojan Milosavlević <milboj@gmail.com>
  */
-;(function($){
+(function($){
 	$.fn.datetimepicker.dates['rs'] = {
 		days: ["Nedelja","Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak", "Subota", "Nedelja"],
 		daysShort: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub", "Ned"],

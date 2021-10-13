@@ -124,7 +124,6 @@ AmCharts.themes.light = {
 		buttonBorderAlpha:0,
 		buttonCornerRadius:2,
 		gridColor:"#FFFFFF",
-		gridBackgroundColor:"#000000",
 		buttonIconAlpha:0.6,
 		gridAlpha: 0.6,
 		buttonSize:20

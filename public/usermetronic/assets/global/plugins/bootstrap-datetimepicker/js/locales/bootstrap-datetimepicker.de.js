@@ -2,7 +2,7 @@
  * German translation for bootstrap-datetimepicker
  * Sam Zurcher <sam@orelias.ch>
  */
-;(function($){
+(function($){
 	$.fn.datetimepicker.dates['de'] = {
 		days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"],
 		daysShort: ["Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam", "Son"],
