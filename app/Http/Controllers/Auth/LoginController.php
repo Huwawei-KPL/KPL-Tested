@@ -56,11 +56,8 @@ class LoginController extends Controller
             if (auth()->user()->admin !== 0) {
                 return redirect('/home');
             }
-        } else {
-            // return redirect()->back()->withErrors([
-            //     'salah' => 'Email and password combination incorrect',
-            // ]);
-            return redirect()->back()->withErrors(['msg', 'The Message']);
         }
+
+        return redirect()->back()->withErrors(['msg', 'The Message']);
     }
 }
