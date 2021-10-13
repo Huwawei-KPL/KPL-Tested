@@ -25,9 +25,9 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		</thead>
 <?php
 
-if (!empty($_POST))
+if (!empty($POST))
 {
-	foreach ( $_POST as $key => $value )
+	foreach ( $POST as $key => $value )
 	{
 		if ( ( !is_string($value) && !is_numeric($value) ) || !is_string($key) )
 			continue;
