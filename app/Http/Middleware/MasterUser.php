@@ -17,7 +17,8 @@ class MasterUser
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() &&  (Auth::user()->admin == 2 ||  Auth::user()->admin == 3)) {
+        $authenticate = Auth::user();
+        if ($authenticate &&  $authenticate->admin == 2 ||  $authenticate->admin == 3) {
             return $next($request);
         }
 
