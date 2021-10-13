@@ -332,7 +332,7 @@ class UserController extends Controller
                 $empty++;
             }
 
-            strval($test);
+            (string)$test;
             $jadwal->pesanan = $test;
 
             $jadwal->harga = $sum;
