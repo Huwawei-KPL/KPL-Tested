@@ -17,7 +17,8 @@ class MasterKonsumsi
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() &&  (Auth::user()->admin == 4 ||  Auth::user()->admin == 3)) {
+        $abc = Auth::user();
+        if ($abc &&  ($abc->admin == 4 ||  $abc->admin == 3)) {
             return $next($request);
         }
 
