@@ -680,7 +680,7 @@ class UserController extends Controller
                 $test = $test . "||" . $cekharga->jumlahpesanan . " " . $cekharga->konsumsi . " ";
             }
             $test = $test . "||";
-            strval($test);
+            (string)$test;
             $jadwal->pesanan = $test;
 
             $jadwal->harga = $sum;
