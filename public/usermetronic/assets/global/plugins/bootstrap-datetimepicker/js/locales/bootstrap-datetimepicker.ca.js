@@ -2,7 +2,7 @@
  * Catalan translation for bootstrap-datetimepicker
  * J. Garcia <jogaco.en@gmail.com>
  */
-;(function($){
+(function($){
 	$.fn.datetimepicker.dates['ca'] = {
 		days: ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte", "Diumenge"],
 		daysShort: ["Diu",  "Dil", "Dmt", "Dmc", "Dij", "Div", "Dis", "Diu"],
