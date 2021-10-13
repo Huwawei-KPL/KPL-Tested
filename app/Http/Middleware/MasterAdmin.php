@@ -17,7 +17,8 @@ class MasterAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->admin == 3) {
+        $abc = Auth::user();
+        if ($abc &&  $abc->admin == 3) {
             return $next($request);
         }
 
